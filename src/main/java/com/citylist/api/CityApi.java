@@ -2,6 +2,10 @@ package com.citylist.api;
 
 import com.citylist.service.dto.CityDto;
 import com.citylist.service.dto.CitySearchDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,6 +27,19 @@ public interface CityApi {
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ALLOW_READ')")
     CityDto getById(@PathVariable("id") Long id);
+
+    @Operation(
+            summary = "Get cities with wikimedia.org photo",
+            description = "Returns a paginated list of cities whose photo URL belongs only to wikimedia.org or its subdomains"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved page of cities"),
+            @ApiResponse(responseCode = "400", description = "Invalid sort parameter"),
+            @ApiResponse(responseCode = "403", description = "Access denied")
+    })
+    @GetMapping("/wikimedia")
+    @PreAuthorize("hasRole('ALLOW_READ')")
+    Page<CityDto> getWithWikimediaPhoto(@ParameterObject Pageable pageable);
 
     @PostMapping("/search")
     @PreAuthorize("hasRole('ALLOW_READ')")

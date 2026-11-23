@@ -1,9 +1,9 @@
 package com.citylist.api;
 
+import com.citylist.service.PhotoDomain;
 import com.citylist.service.dto.CityDto;
 import com.citylist.service.dto.CitySearchDto;
 import com.citylist.service.CityDomainService;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -22,6 +22,11 @@ public class CityController implements CityApi {
     @Override
     public CityDto getById(Long id) {
         return cityDomainService.get(id);
+    }
+
+    @Override
+    public Page<CityDto> getWithWikimediaPhoto(Pageable pageable) {
+        return cityDomainService.getCitiesByPhotoDomain(PhotoDomain.WIKIMEDIA.getHost(), pageable);
     }
 
     @Override

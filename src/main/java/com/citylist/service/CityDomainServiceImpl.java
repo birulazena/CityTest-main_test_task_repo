@@ -12,6 +12,7 @@ import org.apache.commons.csv.CSVRecord;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,6 +35,13 @@ public class CityDomainServiceImpl implements CityDomainService {
     @NonNull
     public Page<CityDto> searchPage(@NonNull CitySearchDto searchDto, @NonNull Pageable pageable) {
         return cityRepository.searchPage(searchDto, pageable);
+    }
+
+    @Override
+    @NonNull
+    @Transactional(readOnly = true)
+    public Page<CityDto> getCitiesByPhotoDomain(@NonNull String domain, @NonNull Pageable pageable) {
+        return cityRepository.findAllByPhotoDomain(domain, pageable);
     }
 
     @Override

@@ -13,6 +13,9 @@ public interface CityRepository {
     Page<CityDto> searchPage(@NonNull CitySearchDto searchDto, @NonNull Pageable pageable);
 
     @NonNull
+    Page<CityDto> findAllByPhotoDomain(@NonNull String domain, @NonNull Pageable pageable);
+
+    @NonNull
     CityDto findById(@NonNull Long id);
 
     @NonNull

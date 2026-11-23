@@ -14,6 +14,9 @@ public interface CityDomainService {
     Page<CityDto> searchPage(@NonNull CitySearchDto searchDto, @NonNull Pageable pageable);
 
     @NonNull
+    Page<CityDto> getCitiesByPhotoDomain(@NonNull String domain, @NonNull Pageable pageable);
+
+    @NonNull
     CityDto update(@NonNull CityDto updateDto);
 
     @NonNull
